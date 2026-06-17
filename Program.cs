@@ -66,5 +66,32 @@ class Program
     static List<TaskItem> tasks = new List<TaskItem>();
     static string filePath = "tasks.txt";
 
-     
+    static void DisplayMenu()
+    {
+        Console.WriteLine("Task Manager");
+        Console.WriteLine("1. Add Task");
+        Console.WriteLine("2. View Tasks");
+        Console.WriteLine("3. Mark Task as Completed");
+        Console.WriteLine("4. Delete Task");
+        Console.WriteLine("5. Exit");
+        Console.Write("Select an option: ");
+    }
+    static void AddTask() 
+    {
+    }
+    static void ViewTasks() 
+    {
+    }
+    static void MarkTaskCompleted() 
+    {
+    }
+    static void DeleteTask() 
+    {
+    }
+    static void SaveTasks() 
+    {
+    }
+    static void LoadTasks() 
+    {
+    }
 }
