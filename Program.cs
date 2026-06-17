@@ -18,6 +18,9 @@ public class TaskItem
 
 class Program
 {
+    static List<TaskItem> tasks = new List<TaskItem>();
+    static string filePath = "tasks.txt";
+
     static void Main(string[] args)
     {
         LoadTasks();
@@ -62,10 +65,6 @@ class Program
         }
     }
 
-
-    static List<TaskItem> tasks = new List<TaskItem>();
-    static string filePath = "tasks.txt";
-
     static void DisplayMenu()
     {
         Console.WriteLine("Task Manager");
@@ -76,22 +75,123 @@ class Program
         Console.WriteLine("5. Exit");
         Console.Write("Select an option: ");
     }
-    static void AddTask() 
+
+    static void AddTask()
     {
+        Console.Write("Enter task name: ");
+        string name = Console.ReadLine();
+
+        if (!string.IsNullOrWhiteSpace(name))
+        {
+            int newId = tasks.Count > 0 ? tasks[tasks.Count - 1].Id + 1 : 1;
+            tasks.Add(new TaskItem(newId, name));
+            Console.WriteLine("Task added successfully.");
+            SaveTasks();
+        }
+        else
+        {
+            Console.WriteLine("Task name cannot be empty.");
+        }
     }
-    static void ViewTasks() 
+
+    static void ViewTasks()
     {
+        if (tasks.Count == 0)
+        {
+            Console.WriteLine("No tasks available.");
+            return;
+        }
+
+        foreach (var task in tasks)
+        {
+            string status = task.IsCompleted ? "[X]" : "[ ]";
+            Console.WriteLine($"{task.Id}. {status} {task.Name}");
+        }
     }
-    static void MarkTaskCompleted() 
+
+    static void MarkTaskCompleted()
     {
+        ViewTasks();
+        if (tasks.Count == 0) return;
+
+        Console.Write("\nEnter task ID to mark as completed: ");
+        if (int.TryParse(Console.ReadLine(), out int id))
+        {
+            var task = tasks.Find(t => t.Id == id);
+            if (task != null)
+            {
+                task.IsCompleted = true;
+                Console.WriteLine("Task marked as completed.");
+                SaveTasks();
+            }
+            else
+            {
+                Console.WriteLine("Task not found.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Invalid ID format.");
+        }
     }
-    static void DeleteTask() 
+
+    static void DeleteTask()
     {
+        ViewTasks();
+        if (tasks.Count == 0) return;
+
+        Console.Write("\nEnter task ID to delete: ");
+        if (int.TryParse(Console.ReadLine(), out int id))
+        {
+            var task = tasks.Find(t => t.Id == id);
+            if (task != null)
+            {
+                tasks.Remove(task);
+                Console.WriteLine("Task deleted.");
+                SaveTasks();
+            }
+            else
+            {
+                Console.WriteLine("Task not found.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Invalid ID format.");
+        }
     }
-    static void SaveTasks() 
+
+    static void SaveTasks()
     {
+        List<string> lines = new List<string>();
+        foreach (var task in tasks)
+        {
+            lines.Add($"{task.Id};{task.Name};{task.IsCompleted}");
+        }
+        File.WriteAllLines(filePath, lines);
     }
-    static void LoadTasks() 
+
+    static void LoadTasks()
     {
+        if (File.Exists(filePath))
+        {
+            tasks.Clear();
+            string[] lines = File.ReadAllLines(filePath);
+
+            foreach (var line in lines)
+            {
+                string[] parts = line.Split(';');
+                if (parts.Length == 3)
+                {
+                    int id = int.Parse(parts[0]);
+                    string name = parts[1];
+                    bool isCompleted = bool.Parse(parts[2]);
+
+                    TaskItem loadedTask = new TaskItem(id, name);
+                    loadedTask.IsCompleted = isCompleted;
+                    tasks.Add(loadedTask);
+                }
+            }
+        }
     }
 }
