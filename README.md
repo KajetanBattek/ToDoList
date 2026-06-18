@@ -1,12 +1,22 @@
-# Konsolowa aplikacja To Do List
-Prosta aplikacja konsolowa napisana w języku **C#**, służąca do zarządzania codziennymi zadaniami. Aplikacja przechowuje dane lokalnie w pliku tekstowym, dzięki czemu Twoje zadania nie znikają po jej wyłączeniu.
-# Funkcje
-Dodawanie zadania: Możliwość szybkiego utworzenia nowego zadania, któremu program automatycznie przydzieli unikalny numer ID.
+# Task Manager - Konsolowa Lista Zadań w C#
 
-Wyświetlanie zadań: Wgląd w pełną listę zapisanych obowiązków wraz z czytelnym statusem ukończenia (oznaczenia [ ] dla zadań oczekujących oraz [X] dla ukończonych).
+## Krótki opis aplikacji
+Aplikacja to prosty, konsolowy menedżer zadań (To-Do List) napisany w języku C#. Służy do organizacji codziennych obowiązków. Program został stworzony w oparciu o podstawowe zasady programowania obiektowego i działa w interaktywnej pętli, reagując na komendy użytkownika.
 
-Oznaczanie jako ukończone: Zmiana statusu wybranego zadania poprzez podanie jego numeru ID.
+## Lista funkcji
+* **Dodawanie zadań:** Możliwość wpisania nowej pozycji na listę.
+* **Przeglądanie zadań:** Wyświetlanie wszystkich zadań wraz z ich unikalnym numerem ID oraz statusem ukończenia (`[ ]` - do zrobienia, `[X]` - wykonane).
+* **Oznaczanie jako wykonane:** Możliwość zmiany statusu zadania po podaniu jego numeru ID.
+* **Usuwanie zadań:** Trwałe kasowanie zadania z listy na podstawie ID.
+* **Autozapis:** Program po każdej operacji natychmiastowo zapisuje obecny stan do pliku tekstowego, dzięki czemu nie tracimy danych po wyłączeniu konsoli.
 
-Usuwanie zadania: Trwałe kasowanie wybranego wpisu z listy (za pomocą ID).
+## Instrukcja uruchomienia
+1. Pobierz repozytorium z kodem na swój komputer.
+2. Otwórz plik rozwiązania (z rozszerzeniem `.sln`) za pomocą środowiska Visual Studio.
+3. Uruchom aplikację klikając przycisk "Start" na górnym pasku lub wciskając klawisz `F5`.
+4. Sterowanie programem odbywa się poprzez wpisywanie na klawiaturze odpowiednich cyfr (od 1 do 5) widocznych w menu głównym i zatwierdzanie ich klawiszem `Enter`.
 
-Trwały zapis danych (Auto-Save): Każda akcja (dodanie, edycja, usunięcie) automatycznie aktualizuje stan w zewnętrznym pliku tekstowym tasks.txt.
+## Informacja o elementach dodatkowych
+W ramach projektu zrealizowano następujące wymagania dodatkowe:
+* **OOP (Programowanie Obiektowe):** Projekt wykorzystuje niestandardową klasę `TaskItem`, która posiada własne właściwości (`Id`, `Name`, `IsCompleted`) oraz konstruktor. Dane przechowywane są w generycznej liście obiektowej `List<TaskItem>`.
+* **IO (Zapis/Odczyt z pliku):** Program realizuje trwały zapis danych. Do zapisu i odczytu wykorzystano przestrzeń nazw `System.IO` oraz plik tekstowy `tasks.txt`, w którym poszczególne parametry obiektów separowane są średnikiem.
